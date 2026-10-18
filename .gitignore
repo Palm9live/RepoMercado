@@ -73,3 +73,6 @@ Thumbs.db
 # Las plantillas con valores vacíos son environment.example.ts y environment.prod.example.ts
 src/environments/environment.ts
 src/environments/environment.prod.ts
+
+# npm (el proyecto usa pnpm)
+package-lock.json
