@@ -1,0 +1,32 @@
+name: Deploy to Firebase Hosting
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.11.2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Crear archivos de entorno
+        env:
+          ENV_TS: ${{ secrets.ENVIRONMENT_TS }}
+          ENV_PROD_TS: ${{ secrets.ENVIRONMENT_PROD_TS }}
+        run: |
+          echo "$ENV_TS" > src/environments/environment.ts
+          echo "$ENV_PROD_TS" > src/environments/environment.prod.ts
+      - run: pnpm build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          channelId: live
+          projectId: mercadovecino-fca98
