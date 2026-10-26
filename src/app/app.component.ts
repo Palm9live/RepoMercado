@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { SessionService } from './services/session.service';
 
 @Component({
   selector: 'app-root',
@@ -24,15 +26,21 @@ export class AppComponent {
       url: '/orders',
       icon: 'receipt'
     },
-    {
-      title: 'Cerrar sesion',
-      url: '/login',
-      icon: 'log-out'
-    }
   ];
 
   protected readonly labels: string[] = [];
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private sessionService: SessionService
+  ) { }
+
+  async logout(){
+    
+    await this.sessionService.clearSession();
+
+    this.router.navigate(['/login']);
+
+  }
 
 }

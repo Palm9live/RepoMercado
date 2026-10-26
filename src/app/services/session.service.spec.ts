@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Session } from './session';
+import { Session } from './session.service';
 
 describe('Session', () => {
   let service: Session;
