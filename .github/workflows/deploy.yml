@@ -20,9 +20,14 @@ jobs:
         env:
           ENV_TS: ${{ secrets.ENVIRONMENT_TS }}
           ENV_PROD_TS: ${{ secrets.ENVIRONMENT_PROD_TS }}
-        run:
-          echo "$ENV_TS" > src/environments/environment.ts
-          echo "$ENV_PROD_TS" > src/environments/environment.prod.ts
+        run: |
+          cat << 'EOF' > src/environments/environment.ts
+          ${{ secrets.ENVIRONMENT_TS }}
+          EOF
+
+          cat << 'EOF' > src/environments/environment.prod.ts
+          ${{ secrets.ENVIRONMENT_PROD_TS }}
+          EOF
       - name: Comprobar archivos de entorno
         run:
           wc -c src/environments/environment.ts src/environments/environment.prod.ts
