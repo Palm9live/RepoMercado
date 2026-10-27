@@ -20,11 +20,11 @@ jobs:
         env:
           ENV_TS: ${{ secrets.ENVIRONMENT_TS }}
           ENV_PROD_TS: ${{ secrets.ENVIRONMENT_PROD_TS }}
-        run: |
+        run:
           echo "$ENV_TS" > src/environments/environment.ts
           echo "$ENV_PROD_TS" > src/environments/environment.prod.ts
       - name: Comprobar archivos de entorno
-        run: |
+        run:
           wc -c src/environments/environment.ts src/environments/environment.prod.ts
           grep -c "export const environment" src/environments/environment.ts src/environments/environment.prod.ts || true
       - run: pnpm build
